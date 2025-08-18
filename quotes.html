@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ungkapin Perasaan 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #3a1c71);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      max-width: 500px;
+      backdrop-filter: blur(10px);
+    }
+    h1 {
+      font-size: 1.6rem;
+    }
+    p.typing {
+      font-size: 1.2rem;
+      min-height: 60px;
+      margin-top: 1rem;
+    }
+    button {
+      margin: 0.5rem;
+      padding: 0.7rem 1.4rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #ff4b5c;
+      color: #fff;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #ff6b81;
+    }
+    .heart {
+      font-size: 2rem;
+      animation: float 2s infinite alternate;
+    }
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="heart">❤️</div>
+    <h1>Hai, <span id="targetName">[HANA]</span> ✨</h1>
+    <p id="message" class="typing"></p>
+    <div>
+      <button onclick="startTyping(CONFIG.shortMessage)">Aku Punya Sesuatu...</button>
+      <button onclick="startTyping(CONFIG.longMessage)">Boleh Jujur?</button>
+    </div>
+    <div>
+      <button onclick="goInstagram()">Jawab via Instagram</button>
+    </div>
+  </div>
+
+  <!-- Musik Background -->
+  <audio id="bg-music" loop>
+    <source src="tentang kita.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // Konfigurasi
+    const CONFIG = {
+      targetName: "hana", // ganti nama target
+      shortMessage: "gue suka sama lo. Bukan cuma hari ini, tapi sejak di kelas 12.",
+      longMessage: "Setiap hari gue makin yakin, kalau lo itu orang yang selalu gue tunggu, mungkin. gue nyaman sama lo, gue sayang sama lo mungkin ini sedikit alay , tapi inilah ungkapan hati gue.",
+      instagramUser: "reyhanverse1" // ganti dengan username IG kamu
+    };
+
+    document.getElementById("targetName").textContent = CONFIG.targetName;
+
+    function startTyping(text) {
+      const msgElem = document.getElementById("message");
+      msgElem.textContent = "";
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          msgElem.textContent += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 60);
+    }
+
+    function goInstagram() {
+      window.open("https://instagram.com/" + CONFIG.instagramUser, "_blank");
+    }
+
+    // Musik autoplay (fallback klik)
+    const music = document.getElementById("bg-music");
+    window.addEventListener("load", () => {
+      music.play().catch(() => {
+        console.log("Autoplay diblokir, menunggu interaksi pengguna.");
+      });
+    });
+
+    document.body.addEventListener("click", () => {
+      if (music.paused) {
+        music.play();
+      }
+    }, { once: true });
+  </script>
+</body>
+</html>
